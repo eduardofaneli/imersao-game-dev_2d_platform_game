@@ -1,6 +1,6 @@
 class Scenario {
-  constructor(image, speed) {
-    this.image = image;
+  constructor(img, speed) {
+    this.image = img;
     this.speed = speed;
     this.firstScenarioX = 0;
     this.secondScenarioX = width;
