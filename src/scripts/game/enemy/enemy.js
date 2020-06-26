@@ -3,16 +3,19 @@ class Enemy extends Animate {
     array,
     img,
     positionX,
+    variationY,
     personWidth,
     personHeight,
     widthSprite,
     heightSprite,
-    speed = 10
+    speed = 10,
+    delay
   ) {
     super(
       array,
       img,
       positionX,
+      variationY,
       personWidth,
       personHeight,
       widthSprite,
@@ -20,10 +23,12 @@ class Enemy extends Animate {
     );
 
     this.speed = speed;
+    this.delay = delay;
+    this.positionX = width + this.delay;
   }
 
   move() {
-    this.positionX < -this.personWidth
+    this.positionX < -this.personWidth - this.delay
       ? (this.positionX = width)
       : (this.positionX = this.positionX - this.speed);
   }
