@@ -27,6 +27,7 @@ class Person extends Animate {
     this.jumpHeight = -40;
     this.jumpCount = 0;
     this.maxJumps = 2;
+    this.invincible = false;
   }
 
   jump() {
@@ -35,6 +36,10 @@ class Person extends Animate {
       jumpSound.play();
       this.jumpCount++;
     }
+  }
+
+  run() {
+    this.positionX++;
   }
 
   applyGravity() {
@@ -47,7 +52,16 @@ class Person extends Animate {
     }
   }
 
+  stayInvincible() {
+    this.invincible = true;
+    setTimeout(() => {
+      this.invincible = false;
+    }, 2000);
+  }
+
   colliding(enemy) {
+    if (this.invincible) return false;
+
     const precision = 0.7;
     noFill();
     rect(

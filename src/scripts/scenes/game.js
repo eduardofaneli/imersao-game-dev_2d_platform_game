@@ -1,14 +1,83 @@
 class Game {
   constructor() {
-    this.currentEnemy = 0;
     this.enemys = [];
+    this.colliding;
+
+    this.currentEnemy = 0;
+    this.map = {
+      enemys: [
+        { enemy: 0, speed: 10 },
+        { enemy: 1, speed: 30 },
+        { enemy: 1, speed: 15 },
+        { enemy: 2, speed: 40 },
+      ],
+    };
   }
 
   setup() {
     scenario = new Scenario(imageScenario, 5);
     scores = new Score();
+    life = new Life(3, 3);
 
+    this._createLiveElements();
+  }
+
+  keyPress(key) {
+    if (key === "ArrowUp") person.jump();
+    if (key === "ArrowRight") person.run();
+  }
+
+  draw() {
+    scenario.display();
+    scenario.move();
+
+    life.draw();
+
+    scores.display();
+    scores.addPoint();
+    person.display();
+    person.applyGravity();
+
+    const currentLine = this.map.enemys[this.currentEnemy];
+    const enemy = this.enemys[currentLine.enemy];
+    const visibleEnemy = enemy.positionX < -enemy.personWidth;
+    enemy.speed = currentLine.speed;
+
+    enemy.display();
+    enemy.move();
+
+    if (visibleEnemy) {
+      this.currentEnemy++;
+      enemy.show();
+      if (this.currentEnemy > this.map.enemys.length - 1) {
+        this.currentEnemy = 0;
+      }
+    }
+
+    this._checkCollide(enemy);
+  }
+
+  _checkCollide(enemy) {
+    this.colliding = person.colliding(enemy);
+    if (this.colliding) {
+      life.removeLife();
+      person.stayInvincible();
+
+      if (life.lifes === 0) {
+        gameTrack.stop();
+        image(
+          imageGameOver,
+          width / 2 - imageGameOver.width / 2,
+          height / 2 - imageGameOver.height / 2
+        );
+        noLoop();
+      }
+    }
+  }
+
+  _createLiveElements() {
     person = new Person(arrayPerson, imagePerson, 0, 30, 110, 135, 220, 270);
+
     const dropletEnemy = new Enemy(
       arrayDroplet,
       imageDroplet,
@@ -18,8 +87,7 @@ class Game {
       52,
       104,
       104,
-      10,
-      0
+      10
     );
 
     const trollEnemy = new Enemy(
@@ -31,8 +99,7 @@ class Game {
       200,
       400,
       400,
-      10,
-      0
+      10
     );
 
     const flyDropletEnemy = new Enemy(
@@ -44,46 +111,11 @@ class Game {
       75,
       200,
       150,
-      10,
-      0
+      10
     );
 
     this.enemys.push(dropletEnemy);
     this.enemys.push(trollEnemy);
     this.enemys.push(flyDropletEnemy);
-  }
-
-  keyPress(key) {
-    if (key === "ArrowUp") person.jump();
-  }
-
-  draw() {
-    scenario.display();
-    scenario.move();
-    scores.display();
-    scores.addPoint();
-    person.display();
-    person.applyGravity();
-    const enemy = this.enemys[this.currentEnemy];
-    const visibleEnemy = enemy.positionX < -enemy.personWidth;
-    enemy.display();
-    enemy.move();
-
-    if (visibleEnemy) {
-      this.currentEnemy++;
-      if (this.currentEnemy > this.enemys.length - 1) {
-        this.currentEnemy = 0;
-        enemy.speed = parseInt(random(10, 30));
-      }
-    }
-    if (person.colliding(enemy)) {
-      gameTrack.stop();
-      image(
-        imageGameOver,
-        width / 2 - imageGameOver.width / 2,
-        height / 2 - imageGameOver.height / 2
-      );
-      noLoop();
-    }
   }
 }

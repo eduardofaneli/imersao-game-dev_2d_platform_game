@@ -6,6 +6,7 @@ function loadAssets() {
   imageFlyDroplet = loadImage("./assets/images/enemys/fly-droplet.png");
   imageGameOver = loadImage("./assets/images/assets/game-over.png");
   imageStartScreen = loadImage("./assets/images/assets/home-screen.png");
+  imageLife = loadImage("./assets/images/assets/heart.png");
 
   fontStartScreen = loadFont("./assets/images/assets/font-home_screen.otf");
 

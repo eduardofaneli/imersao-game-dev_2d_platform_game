@@ -5,6 +5,7 @@ let buttonGame;
 let currentScene = "startScreen";
 let scenes;
 
+let life;
 let scenario;
 let person;
 let dropletEnemy;
@@ -19,6 +20,7 @@ let imageTroll;
 let imageFlyDroplet;
 let imageGameOver;
 let imageStartScreen;
+let imageLife;
 
 let fontStartScreen;
 // audio assets section
