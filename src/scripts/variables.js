@@ -26,5 +26,6 @@ let fontStartScreen;
 // audio assets section
 let gameTrack;
 let jumpSound;
+let config;
 
 let scores;

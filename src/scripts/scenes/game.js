@@ -2,22 +2,15 @@ class Game {
   constructor() {
     this.enemys = [];
     this.colliding;
-
     this.currentEnemy = 0;
-    this.map = {
-      enemys: [
-        { enemy: 0, speed: 10 },
-        { enemy: 1, speed: 30 },
-        { enemy: 1, speed: 15 },
-        { enemy: 2, speed: 40 },
-      ],
-    };
+
+    this.map = config.map;
   }
 
   setup() {
     scenario = new Scenario(imageScenario, 5);
     scores = new Score();
-    life = new Life(3, 3);
+    life = new Life(config.settings.maxLife, config.settings.initialLife);
 
     this._createLiveElements();
   }

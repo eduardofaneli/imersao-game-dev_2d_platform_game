@@ -12,6 +12,7 @@ function loadAssets() {
 
   gameTrack = loadSound("assets/sounds/game_track.mp3");
   jumpSound = loadSound("assets/sounds/jump_sound.mp3");
+  config = loadJSON("config/config.json");
 
   arrayDroplet = defineSprites(7, 4, 104, 104);
   arrayPerson = defineSprites(4, 4, 220, 270);
